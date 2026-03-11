@@ -1,20 +1,33 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class OOPSBannerApp {
 
-    public static void main(String[] args) {
+    // Static Inner Class
+    static class CharacterPatternMap {
 
-        String[] o = buildO();
-        String[] p = buildP();
-        String[] s = buildS();
+        private char character;
+        private String[] pattern;
 
-        // Render banner
-        for (int i = 0; i < o.length; i++) {
-            System.out.println(o[i] + "  " + p[i] + "  " + s[i]);
+        public CharacterPatternMap(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
         }
     }
 
-    // Helper method for O
-    public static String[] buildO() {
-        return new String[]{
+    public static void main(String[] args) {
+
+        Map<Character, CharacterPatternMap> patternMap = new HashMap<>();
+
+        patternMap.put('O', new CharacterPatternMap('O', new String[]{
                 " ***** ",
                 "*     *",
                 "*     *",
@@ -22,12 +35,9 @@ public class OOPSBannerApp {
                 "*     *",
                 "*     *",
                 " ***** "
-        };
-    }
+        }));
 
-    // Helper method for P
-    public static String[] buildP() {
-        return new String[]{
+        patternMap.put('P', new CharacterPatternMap('P', new String[]{
                 "***** ",
                 "*    *",
                 "*    *",
@@ -35,12 +45,9 @@ public class OOPSBannerApp {
                 "*     ",
                 "*     ",
                 "*     "
-        };
-    }
+        }));
 
-    // Helper method for S
-    public static String[] buildS() {
-        return new String[]{
+        patternMap.put('S', new CharacterPatternMap('S', new String[]{
                 " *****",
                 "*     ",
                 "*     ",
@@ -48,6 +55,21 @@ public class OOPSBannerApp {
                 "     *",
                 "     *",
                 "***** "
-        };
+        }));
+
+        String word = "OOPS";
+        int height = 7;
+
+        for (int i = 0; i < height; i++) {
+
+            StringBuilder line = new StringBuilder();
+
+            for (char c : word.toCharArray()) {
+                CharacterPatternMap pattern = patternMap.get(c);
+                line.append(pattern.getPattern()[i]).append("  ");
+            }
+
+            System.out.println(line);
+        }
     }
 }
